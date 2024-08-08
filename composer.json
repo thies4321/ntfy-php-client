@@ -1,0 +1,47 @@
+{
+    "name": "thies/ntfy-php-client",
+    "description": "PHP client to communicate with ntfy servers",
+    "license": "MIT",
+    "type": "standard",
+    "keywords": [
+        "ntfy"
+    ],
+    "authors": [
+        {
+            "name": "Thies Verhave",
+            "homepage": "https://verhave.net/",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://github.com/thies4321/ntfy-php-client",
+    "require": {
+        "php": "^8.2",
+        "php-http/client-common": "^2.7",
+        "php-http/discovery": "^1.19",
+        "php-http/httplug": "^2.4",
+        "psr/http-message": "^2.0"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.43",
+        "guzzlehttp/guzzle": "^7.8",
+        "phpstan/phpstan": "^1.11",
+        "phpunit/phpunit": "^11",
+        "psy/psysh": "^0.12.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ntfy\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ntfy\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "php-http/discovery": true
+        }
+    }
+}
