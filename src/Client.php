@@ -9,7 +9,9 @@ use Http\Client\Common\Plugin\AddHostPlugin;
 use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
 use Http\Client\Common\Plugin\RedirectPlugin;
 use Http\Client\Exception;
+use Ntfy\Api\Messages;
 use Ntfy\Api\Publish;
+use Ntfy\Entity\Message;
 use Ntfy\Enum\AuthenticationMethod;
 use Ntfy\HttpClient\Builder;
 use Ntfy\HttpClient\Plugin\Authentication;
@@ -55,6 +57,24 @@ final class Client
         $this->getHttpClientBuilder()->addPlugin(new AddHostPlugin($uri));
     }
 
+    public function enableMarkdown(): void
+    {
+        $this->getHttpClientBuilder()->removePlugin(HeaderDefaultsPlugin::class);
+        $this->getHttpClientBuilder()->addPlugin(new HeaderDefaultsPlugin([
+            'User-Agent' => self::USER_AGENT,
+            'Content-Type' => 'text/markdown',
+        ]));
+    }
+
+    public function disableMarkdown(): void
+    {
+        $this->getHttpClientBuilder()->removePlugin(HeaderDefaultsPlugin::class);
+        $this->getHttpClientBuilder()->addPlugin(new HeaderDefaultsPlugin([
+            'User-Agent' => self::USER_AGENT,
+            'Content-Type' => 'text/plain',
+        ]));
+    }
+
     public function authenticate(
         #[SensitiveParameter] string $token,
         AuthenticationMethod $method = AuthenticationMethod::BearerToken
@@ -68,6 +88,6 @@ final class Client
      */
     public function send(Message $message): Message
     {
-        return (new Publish($this))->send($message);
+        return (new Messages($this))->publish($message);
     }
 }

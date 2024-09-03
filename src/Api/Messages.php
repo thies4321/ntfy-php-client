@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace Ntfy\Api;
 
-use Http\Client\Exception;
+use Http\Client\Exception as HttpClientException;
 use Ntfy\Entity\Message;
 
-use function is_array;
-use function sprintf;
-
-final class Publish extends AbstractApi
+final class Messages extends AbstractApi
 {
     /**
-     * @throws Exception
+     * @throws HttpClientException
      */
-    public function send(Message $message): Message
+    public function publish(Message $message): Message
     {
         $response = $this->post(sprintf('/%s', $message->topic), $message->message);
 
